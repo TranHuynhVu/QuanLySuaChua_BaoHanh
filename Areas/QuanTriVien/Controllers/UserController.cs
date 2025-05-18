@@ -70,6 +70,7 @@ namespace QuanLySuaChua_BaoHanh.Areas.QuanTriVien.Controllers
             ViewBag.UserRoles = userRoles;
 
             // Lấy thông tin phường, quận, thành phố
+
             if (user.PhuongId != null)
             {
                 var phuong = await _context.Phuongs
@@ -202,7 +203,7 @@ namespace QuanLySuaChua_BaoHanh.Areas.QuanTriVien.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id, EditUserViewModel model)
         {
-            if (id != model.Id)
+            if (id.ToString() != model.Id)
             {
                 return NotFound();
             }

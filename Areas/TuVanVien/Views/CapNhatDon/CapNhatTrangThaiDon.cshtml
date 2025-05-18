@@ -1,0 +1,51 @@
+﻿@model QuanLySuaChua_BaoHanh.Models.PhieuSuaChua
+
+@{
+    ViewData["Title"] = "Cập nhật trạng thái đơn";
+    Layout = "~/Areas/TuVanVien/Views/Shared/_LayoutTuVanVien.cshtml";
+    string trangThaiHienTai = Model.TrangThai?.ToLower();
+}
+
+<div class="container mt-4">
+    <h2 class="text-primary">Cập nhật trạng thái đơn</h2>
+
+    <!-- Thông tin cơ bản -->
+    <div class="card p-3 mb-4 shadow-sm">
+        <p><strong>Mã phiếu:</strong> @Model.PhieuSuaChuaId</p>
+        <p><strong>Khách hàng:</strong> @Model.KhachHang?.HoTen</p>
+        <p><strong>SĐT:</strong> @Model.KhachHang?.PhoneNumber</p>
+        <p><strong>Thiết bị:</strong> @Model.MoTaKhachHang</p>
+        <p><strong>Trạng thái hiện tại:</strong> <span class="badge bg-info text-dark">@Model.TrangThai</span></p>
+    </div>
+
+    <!-- Các bước trạng thái -->
+    <div class="d-flex align-items-center justify-content-center gap-3 mb-4 flex-wrap">
+        @{
+            var trangThais = new List<string> { "ChuaDuyet", "DaDuyet", "DangXuLy", "HoanThanh", "Huy" };
+            foreach (var trangThai in trangThais)
+            {
+                bool isActive = trangThai.ToLower() == trangThaiHienTai;
+        }
+        }
+        @foreach (var trangThai in trangThais)
+        {
+            var isActive = trangThai.ToLower() == trangThaiHienTai;
+            <form method="post" asp-action="CapNhatTrangThai" asp-route-id="@Model.PhieuSuaChuaId">
+                <input type="hidden" name="trangThaiMoi" value="@trangThai" />
+                <button type="submit" class="btn @(isActive ? "btn-primary" : "btn-outline-secondary")"
+                        onclick="return confirm('Bạn có chắc chắn muốn chuyển sang trạng thái: @trangThai không?');">
+                    @trangThai
+                </button>
+            </form>
+
+            @if (trangThai != trangThais.Last())
+            {
+                <i class="bi bi-arrow-right fs-4 text-muted"></i>
+            }
+        }
+    </div>
+
+    <a asp-action="CapNhatDon" class="btn btn-secondary mt-2">
+        <i class="bi bi-arrow-left"></i> Quay lại danh sách
+    </a>
+</div>

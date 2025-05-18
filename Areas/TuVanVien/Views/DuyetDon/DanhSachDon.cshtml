@@ -1,0 +1,59 @@
+﻿@model List<QuanLySuaChua_BaoHanh.Models.PhieuSuaChua>
+
+@{
+    ViewData["Title"] = "Danh sách đơn chưa duyệt";
+    Layout = "~/Areas/TuVanVien/Views/Shared/_LayoutTuVanVien.cshtml";
+}
+
+<h2 class="text-center text-primary">Danh sách đơn chưa duyệt</h2>
+
+<form method="post" asp-action="DuyetNhieu">
+    <button type="submit" class="btn btn-success" onclick="return confirm('Bạn có chắc muốn duyệt các đơn đã chọn?');">Duyệt đơn</button>
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>STT</th>
+                <th>Mã phiếu</th>
+                <th>Mô tả</th>
+                <th>Ngày đăng ký</th>
+                <th>Số điện thoại</th>
+                <th>Email</th>
+                <th>Địa chỉ</th>
+                <th>Xem chi tiết</th>
+                <th><input type="checkbox" id="checkAll" onclick="toggleAll(this)" /> Duyệt</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                var item = Model[i];
+                <tr>
+                    <td>@(i + 1)</td>
+                    <td>@item.PhieuSuaChuaId</td>
+                    <td>@item.MoTaKhachHang</td>
+                    <td>@item.NgayGui.ToString("dd/MM/yyyy")</td>
+                    <td>@item.KhachHang?.PhoneNumber</td>
+                    <td>@item.KhachHang?.Email</td>
+                    <td>@item.KhachHang?.DiaChi</td>
+                    <td>
+                        <a asp-action="ChiTietDon" asp-route-id="@item.PhieuSuaChuaId" class="btn btn-info btn-sm">
+                            <i class="bi bi-box-arrow-in-right"></i>
+                        </a>
+                    </td>
+                    <td>
+                        <input type="checkbox" name="selectedIds" value="@item.PhieuSuaChuaId" />
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</form>
+
+@section Scripts {
+    <script>
+        function toggleAll(source) {
+            const checkboxes = document.querySelectorAll('input[name="selectedIds"]');
+            checkboxes.forEach(cb => cb.checked = source.checked);
+        }
+    </script>
+}

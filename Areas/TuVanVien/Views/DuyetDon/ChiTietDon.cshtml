@@ -1,0 +1,77 @@
+﻿@model QuanLySuaChua_BaoHanh.Models.PhieuSuaChua
+
+@{
+    ViewData["Title"] = "Chi tiết đơn";
+    Layout = "~/Areas/TuVanVien/Views/Shared/_LayoutTuVanVien.cshtml";
+}
+
+<h2 class="text-center text-primary">Chi tiết đơn</h2>
+
+<div class="box-wrapper">
+    <div class="info-box">
+        <b>Thông tin khách hàng</b><br />
+        Tên khách hàng: @Model.KhachHang?.HoTen<br />
+        Số điện thoại: @Model.KhachHang?.PhoneNumber<br />
+        Email: @Model.KhachHang?.Email<br />
+        Địa chỉ: @Model.KhachHang?.DiaChi
+    </div>
+
+    <div class="row">
+        <div class="col-md-3 text-center">
+            <img src="https://th.bing.com/th/id/OIP.2vMz5sbqZonNFp_REbaDygHaE8?w=254&h=180&c=7&r=0&o=7&cb=iwp2&dpr=1.3&pid=1.7&rm=3"
+                 alt="Thiết bị"
+                 class="device-img" />
+
+        </div>
+
+        <div class="col-md-9">
+            <div class="text-center mb-2">
+                <input type="text" class="form-control d-inline-block w-50" value="TÊN THIẾT BỊ" readonly />
+            </div>
+            <div class="d-flex justify-content-between">
+                <span>Loại sửa chữa: @Model.MoTaKhachHang</span>
+                <span class="badge bg-info text-dark"> @Model.TrangThai </span>
+                <span>Ngày đăng ký: @Model.NgayGui.ToString("dd/MM/yyyy")</span>
+            </div>
+            <div class="mt-2">
+                <p>Mã phiếu: @Model.PhieuSuaChuaId</p>
+                <p>Mã SP: MGNSPN (tùy ý)</p>
+                <p>Mã BH: 5645 (tùy ý)</p>
+                <p><b>Tổng tiền tạm tính:</b> @Model.ChiTietSuaChuas.Sum(c => c.LinhKien.DonGia * c.SoLuongLinhKien).ToString("N0") đ</p>
+            </div>
+        </div>
+    </div>
+
+    <table class="table mt-4 table-bordered bg-white">
+        <thead>
+            <tr class="text-center">
+                <th>STT</th>
+                <th>Tình trạng</th>
+                <th>Tên linh kiện</th>
+                <th>Giá</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.ChiTietSuaChuas.Count; i++)
+            {
+                var ct = Model.ChiTietSuaChuas.ElementAt(i);
+                <tr>
+                    <td class="text-center">@(i + 1)</td>
+                    <td>@ct.LinhKien.TenLinhKien</td>
+                    <td>@(ct.LinhKien.DonGia.ToString("N0")) đ</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div class="d-flex justify-content-end gap-3">
+        <form method="post" asp-action="Duyet" asp-route-id="@Model.PhieuSuaChuaId">
+            <button class="btn-duyet">Duyệt</button>
+        </form>
+        <button class="btn-lienhe">Liên hệ</button>
+    </div>
+
+    <a asp-action="DanhSachDon" class="btn-back" title="Quay lại">
+        <i class="bi bi-arrow-return-left"></i>
+    </a>
+</div>

@@ -75,6 +75,7 @@ namespace QuanLySuaChua_BaoHanh.Areas.QuanTriVien.Models
 
         [Required(ErrorMessage = "Phường là bắt buộc")]
         [Display(Name = "Phường")]
+
         public string PhuongId { get; set; }
 
         public List<string> SelectedRoles { get; set; }

@@ -1,0 +1,67 @@
+﻿@model QuanLySuaChua_BaoHanh.Models.PhieuSuaChua
+
+@{
+    ViewData["Title"] = "Thêm đơn";
+    Layout = "~/Areas/TuVanVien/Views/Shared/_LayoutTuVanVien.cshtml";
+}
+
+<h2 class="text-primary mb-4">Thêm đơn mới</h2>
+
+<form asp-action="ThemDon" method="post" onsubmit="return confirm('Bạn có chắc muốn thêm đơn này?');">
+    <div class="mb-3">
+        <label asp-for="PhieuSuaChuaId" class="form-label">Mã phiếu</label>
+        <input asp-for="PhieuSuaChuaId" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="KhachHangId" class="form-label">ID khách hàng</label>
+        <input asp-for="KhachHangId" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="MoTaKhachHang" class="form-label">Mô tả</label>
+        <textarea asp-for="MoTaKhachHang" class="form-control"></textarea>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="DiaChiNhanTraSanPham" class="form-label">Địa chỉ nhận trả</label>
+        <input asp-for="DiaChiNhanTraSanPham" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="NgayGui" class="form-label">Ngày gửi</label>
+        <input asp-for="NgayGui" type="date" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="KyThuatId" class="form-label">ID kỹ thuật viên</label>
+        <input asp-for="KyThuatId" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="PhuongId" class="form-label">ID phường</label>
+        <input asp-for="PhuongId" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="NgayHen" class="form-label">Ngày hẹn</label>
+        <input asp-for="NgayHen" type="date" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="NgayTra" class="form-label">Ngày trả</label>
+        <input asp-for="NgayTra" type="date" class="form-control" />
+    </div>
+
+
+    <div class="mb-3">
+        <label asp-for="TrangThai" class="form-label">Trạng thái</label>
+        <select asp-for="TrangThai" class="form-select">
+            <option value="ChuaDuyet">Chưa duyệt</option>
+            <option value="DangXuLy">Đang xử lý</option>
+            <option value="DaHoanThanh">Đã hoàn thành</option>
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Thêm đơn</button>
+    <a asp-action="CapNhatDon" class="btn btn-secondary">Huỷ</a>
+</form>

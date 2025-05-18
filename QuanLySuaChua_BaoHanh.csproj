@@ -26,7 +26,6 @@
     <Folder Include="Areas\KyThuatVien\Models\" />
     <Folder Include="Areas\TuVanVien\Controllers\" />
     <Folder Include="Areas\TuVanVien\Models\" />
-    <Folder Include="Areas\TuVanVien\Views\" />
     <Folder Include="Areas\NhanVienKho\Controllers\" />
     <Folder Include="Areas\NhanVienKho\Models\" />
     <Folder Include="Areas\NhanVienKho\Views\" />

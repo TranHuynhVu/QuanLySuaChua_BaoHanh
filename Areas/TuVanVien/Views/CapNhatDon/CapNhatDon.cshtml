@@ -1,0 +1,50 @@
+﻿@model List<QuanLySuaChua_BaoHanh.Models.PhieuSuaChua>
+
+@{
+    ViewData["Title"] = "Cập nhật đơn";
+    Layout = "~/Areas/TuVanVien/Views/Shared/_LayoutTuVanVien.cshtml";
+}
+
+<h2 class="text-center text-primary">Danh sách đơn cần cập nhật</h2>
+
+<table class="table table-bordered bg-white mt-3">
+    <div class="text-end mb-3">
+        <a asp-action="ThemDon" class="btn btn-success">
+            <i class="bi bi-plus-circle"></i> Thêm đơn
+        </a>
+    </div>
+    <thead class="text-center thead-light">
+        <tr>
+            <th>STT</th>
+            <th>Mã phiếu</th>
+            <th>Mô tả</th>
+            <th>Ngày đăng ký</th>
+            <th>Số điện thoại</th>
+            <th>Email</th>
+            <th>Địa chỉ</th>
+            <th>Trạng thái</th>
+            <th>Cập nhật</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (int i = 0; i < Model.Count; i++)
+        {
+            var phieu = Model[i];
+            <tr>
+                <td class="text-center">@(i + 1)</td>
+                <td>@phieu.PhieuSuaChuaId</td>
+                <td>@phieu.MoTaKhachHang</td>
+                <td>@phieu.NgayGui.ToString("dd/MM/yyyy")</td>
+                <td>@phieu.KhachHang?.PhoneNumber</td>
+                <td>@phieu.KhachHang?.Email</td>
+                <td>@phieu.KhachHang?.DiaChi</td>
+                <td class="text-center">
+                    <span class="badge badge-info">@phieu.TrangThai</span>
+                </td>
+                <td class="text-center">
+                    <a asp-action="CapNhatTrangThaiDon" asp-route-id="@phieu.PhieuSuaChuaId" class="btn btn-sm btn-outline-primary">Cập nhật</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

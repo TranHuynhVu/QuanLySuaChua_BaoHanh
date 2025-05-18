@@ -1,0 +1,87 @@
+﻿@model List<QuanLySuaChua_BaoHanh.Models.NguoiDung>
+
+@{
+    ViewData["Title"] = "Cập nhật khách hàng";
+    Layout = "~/Areas/TuVanVien/Views/Shared/_LayoutTuVanVien.cshtml";
+}
+
+<h2 class="text-center text-primary">Danh sách khách hàng</h2>
+
+<!-- 🔍 Tìm kiếm theo Mã KH -->
+<div class="mb-3">
+    <input type="text" id="searchInput" class="form-control d-inline-block" placeholder="Tìm theo mã khách hàng" style="width: 300px;" />
+    <button type="button" onclick="searchKhachHang()" class="btn btn-primary">🔍</button>
+</div>
+
+<!-- 🗑️ Form xóa nhiều -->
+<form id="formXoaNhieu" method="post" asp-action="XoaNhieu">
+    <div class="mb-2 d-flex justify-content-end">
+        <button type="button" class="btn btn-danger btn-sm" onclick="xoaNhieuConfirm()">
+            🗑️ Xóa đã chọn
+        </button>
+    </div>
+
+    <table class="table table-bordered table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th><input type="checkbox" id="checkAll" onclick="toggleAll(this)" /></th>
+                <th>STT</th>
+                <th>Họ và tên</th>
+                <th>Mã KH</th>
+                <th>Số điện thoại</th>
+                <th>Email</th>
+                <th>Địa chỉ</th>
+                <th>Sửa</th>
+            </tr>
+        </thead>
+        <tbody id="tableBody">
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                var nd = Model[i];
+                <tr>
+                    <td><input type="checkbox" class="selectBox" name="selectedIds" value="@nd.Id" /></td>
+                    <td>@(i + 1)</td>
+                    <td>@nd.HoTen</td>
+                    <td class="ma-kh">@nd.Id</td>
+                    <td>@nd.PhoneNumber</td>
+                    <td>@nd.Email</td>
+                    <td>@nd.DiaChi</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@nd.Id" class="btn btn-warning btn-sm">
+                            <i class="bi bi-pencil"></i>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</form>
+
+@section Scripts {
+    <script>
+        function toggleAll(source) {
+            const checkboxes = document.querySelectorAll('.selectBox');
+            checkboxes.forEach(cb => cb.checked = source.checked);
+        }
+
+        function searchKhachHang() {
+            const input = document.getElementById('searchInput').value.toLowerCase();
+            const rows = document.querySelectorAll('#tableBody tr');
+            rows.forEach(row => {
+                const maKH = row.querySelector('.ma-kh')?.innerText.toLowerCase();
+                row.style.display = maKH.includes(input) ? '' : 'none';
+            });
+        }
+
+        function xoaNhieuConfirm() {
+            const selected = document.querySelectorAll('.selectBox:checked');
+            if (selected.length === 0) {
+                alert("Vui lòng chọn ít nhất một khách hàng để xóa.");
+                return;
+            }
+            if (confirm("Bạn có chắc chắn muốn xóa các khách hàng đã chọn?")) {
+                document.getElementById("formXoaNhieu").submit();
+            }
+        }
+    </script>
+}

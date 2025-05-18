@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace QuanLySuaChua_BaoHanh.Areas.QuanTriVien.Models
 {
@@ -8,7 +9,7 @@ namespace QuanLySuaChua_BaoHanh.Areas.QuanTriVien.Models
 
         [Required(ErrorMessage = "Tên vai trò không được để trống!")]
         [Display(Name = "Tên vai trò")]
-        public string Name { get; set; }
+        public string Name { get; set; } = null!;
     }
 
     public class UserRolesViewModel

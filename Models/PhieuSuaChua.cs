@@ -40,6 +40,7 @@ public partial class PhieuSuaChua
 
     [StringLength(50)]
     [Unicode(false)]
+  
     [Display(Name="Trạng thái")]
     public string? TrangThai { get; set; }
 
